@@ -8,6 +8,7 @@ analyzer:
     unused_local_variable: error
     dead_code: error
     unsafe_html: ignore
+    implicit_call_tearoffs: ignore
   strong-mode:
     implicit-casts: false
 

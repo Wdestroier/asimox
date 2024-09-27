@@ -29,17 +29,18 @@ abstract class DomBuilder<L, V> {
   /// Close the current element.
   L close({String? tag});
 
-  /// Calls [DomNode.build] with the current [DomBuilder] on [node].
-  void visit(DomNode node) => node.build(this);
+  /// Calls [DomNode.call] with the current [DomBuilder] on [node].
+  void visit(DomNode node) => node.call(this);
 
-  /// Calls [DomNode.build] with the current [DomBuilder] on all [nodes].
+  /// Calls [DomNode.call] with the current [DomBuilder] on all [nodes].
   void visitAll(Iterable<DomNode> nodes) => nodes.forEach(visit);
 }
 
 /// Low-level component building block.
 // ignore: one_member_abstracts
 abstract class DomNode<L, V> {
-  void build(DomBuilder<L, V> b);
+  DomNode build();
+  void call(DomBuilder<L, V> b) => b.visit(build());
 }
 
 /// DOM lifecycle event callback function.

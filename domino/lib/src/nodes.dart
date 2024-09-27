@@ -1,4 +1,5 @@
-import 'dom_builder.dart';
+import 'package:domino/browser.dart';
+
 
 /// Text node.
 class DomText implements DomNode {
@@ -6,7 +7,11 @@ class DomText implements DomNode {
   DomText(this._value);
 
   @override
-  void build(DomBuilder b) {
+  DomNode build() =>
+      throw Exception('DomText.build() is never called in DomText.call().');
+
+  @override
+  void call(DomBuilder b) {
     b.text(_value);
   }
 }
@@ -45,14 +50,31 @@ class DomElement<L, V> implements DomNode<L, V> {
         _classes = classes,
         _styles = styles,
         _attributes = attributes,
-        _events = events,
+        _events = _attachNotifyChangesCallback(events),
         _onCreate = onCreate,
         _onUpdate = onUpdate,
         _onRemove = onRemove,
         _children = __children(children, child, text);
 
+  static Map<String, DomEventFn<L, V>>? _attachNotifyChangesCallback<L, V>(
+      Map<String, DomEventFn<L, V>>? events) {
+    return events?.map((name, originalHandler) => MapEntry(name, (event) {
+          final result = originalHandler(event);
+
+          if (result is Future) {
+            result.then((_) => changeDetection.postEvent(event));
+          } else {
+            changeDetection.postEvent(event);
+          }
+        }));
+  }
+
   @override
-  void build(DomBuilder<L, V> b) {
+  DomNode build() => throw Exception(
+      'DomElement.build() is never called in DomElement.call().');
+
+  @override
+  void call(DomBuilder<L, V> b) {
     b.open(
       tag,
       id: _id,
@@ -67,7 +89,7 @@ class DomElement<L, V> implements DomNode<L, V> {
     );
     if (_children != null) {
       for (final node in _children) {
-        node.build(b);
+        node.call(b);
       }
     }
     b.close(tag: tag);
@@ -92,7 +114,7 @@ abstract class DomComponent<L, V> implements DomNode<L, V> {
   }
 
   @override
-  void build(DomBuilder<L, V> b) {
+  void call(DomBuilder<L, V> b) {
     onBeforeBuild();
     b.open(
       tag,
@@ -108,7 +130,7 @@ abstract class DomComponent<L, V> implements DomNode<L, V> {
     final children_ = children;
     if (children_ != null) {
       for (final node in children_) {
-        node.build(b);
+        node.call(b);
       }
     }
     b.close(tag: tag);

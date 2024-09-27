@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:js_interop';
 
+import 'package:domino/src/change_detection.dart';
 import 'package:web/web.dart';
 
 import 'dom_builder.dart';
+
+late final DomView rootView;
+final changeDetection = ChangeDetection();
 
 extension on Element {
   Iterable<Element> childrenIterable() {
@@ -34,6 +38,16 @@ extension on NamedNodeMap {
     }
     return set;
   }
+}
+
+void runApp(
+  DomNode root, {
+  String rootElementId = 'root',
+}) {
+  rootView = registerView(
+    root: document.getElementById(rootElementId)!,
+    builderFn: root,
+  );
 }
 
 /// Register DOM view in browser.

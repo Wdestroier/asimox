@@ -8,14 +8,18 @@ void main() {
 void _main() {
   final root = document.getElementById('root')!;
   final app = _App();
-  registerView(root: root, builderFn: app.build);
+  registerView(root: root, builderFn: app.call);
 }
 
 class _App extends DomNode {
   int _counter = 0;
 
   @override
-  void build(DomBuilder b) {
+  DomNode build() =>
+      throw Exception('_App.build() is never called in _App.call().');
+
+  @override
+  void call(DomBuilder b) {
     b.visitAll([
       DomElement('button', id: 'app-button', events: {
         'click': (e) {

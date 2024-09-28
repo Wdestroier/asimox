@@ -40,6 +40,7 @@ class AppPage extends DomNode {
   @override
   DomNode build() {
     return div(
+      classes: ['counter-app'],
       children: [
         if (name != null) h1(text: '$name counter'),
         button(
@@ -49,7 +50,7 @@ class AppPage extends DomNode {
           },
           text: 'Click',
         ),
-        span(id: 'app-count', text: 'count: $count'),
+        span(id: 'app-count', text: 'Count: $count'),
       ],
     );
   }

@@ -24,8 +24,13 @@ final router = WebRouter(
     ),
   ],
   defaultRoute: (_) => NotFoundPage(),
+  middlewares: [isAuthenticated],
   // TODO(wfontao): Implement global errorRoute with try/catch.
 );
+
+bool isAuthenticated(parameters) {
+  return true;
+}
 
 void main() {
   runApp(router);

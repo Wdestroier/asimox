@@ -1,15 +1,20 @@
 import 'dart:html';
-
 import 'package:domino/domino.dart';
 
-typedef RouteHandler = DomNode Function(Map<String, String> params);
+typedef RouteHandler = DomNode Function(Map<String, String> parameters);
+typedef Middleware = bool Function(Map<String, String> parameters);
 
 class WebRouter extends DomNode {
   final List<Route> routes;
   final RouteHandler defaultRoute;
+  final List<Middleware> middlewares;
   DomNode? _currentRouteNode;
 
-  WebRouter({required this.routes, required this.defaultRoute}) {
+  WebRouter({
+    required this.routes,
+    required this.defaultRoute,
+    this.middlewares = const [],
+  }) {
     _init();
   }
 
@@ -19,19 +24,43 @@ class WebRouter extends DomNode {
 
     Map<String, String> queryParams = {};
     if (queryString != null && queryString.isNotEmpty) {
-      // Remove the leading '?' and parse.
       queryParams = Uri.splitQueryString(queryString.substring(1));
     }
 
     for (var route in routes) {
       final match = route.match(path);
       if (match != null) {
+        final routeParams = {...match, ...queryParams};
+
+        // Check global middleware
+        if (!_runMiddleware(middlewares, routeParams)) {
+          _currentRouteNode = defaultRoute(routeParams);
+          return;
+        }
+
+        // Check route-specific middleware
+        if (!_runMiddleware(route.middlewares, routeParams)) {
+          _currentRouteNode = defaultRoute(routeParams);
+          return;
+        }
+
         // Combine path parameters and query parameters.
-        _currentRouteNode = route.handler({...match, ...queryParams});
+        _currentRouteNode = route.handler(routeParams);
         return;
       }
     }
+
     _currentRouteNode = defaultRoute(queryParams);
+  }
+
+  bool _runMiddleware(
+      List<Middleware> middlewares, Map<String, String> params) {
+    for (var middleware in middlewares) {
+      if (!middleware(params)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   void _init() {
@@ -55,8 +84,9 @@ class Route {
   final RegExp pattern;
   final RouteHandler handler;
   final String routePattern;
+  final List<Middleware> middlewares;
 
-  Route(this.routePattern, this.handler)
+  Route(this.routePattern, this.handler, {this.middlewares = const []})
       : pattern = _createRegExp(routePattern);
 
   static RegExp _createRegExp(String routePattern) {

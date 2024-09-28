@@ -6,6 +6,10 @@ class ChangeDetection {
   bool get isEnabled => _enabled;
 
   void postEvent(DomEvent event) {
+    trigger();
+  }
+
+  void trigger() {
     if (isEnabled) {
       // We can have debounce or other optimizations.
       rootView.invalidate();

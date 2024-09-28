@@ -14,10 +14,8 @@ class App extends DomNode {
       children: [
         button(
           id: 'app-button',
-          events: {
-            'click': (e) {
-              _counter++;
-            },
+          onClick: (e) {
+            _counter++;
           },
           text: 'Click',
         ),

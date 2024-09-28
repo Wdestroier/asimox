@@ -47,6 +47,61 @@ final _boolAttributes = {
   'truespeed',
 };
 
+/// Extracted from: https://html.spec.whatwg.org/multipage/indices.html#events-2
+/// Preprocessed by ChatGPT.
+/// TODO(wfontao): Add event descriptions as Dart documentation.
+final events = [
+  // Event(dartName, htmlName).
+  ('onAfterPrint', 'afterprint'),
+  ('onBeforePrint', 'beforeprint'),
+  ('onBeforeMatch', 'beforematch'),
+  ('onBeforeToggle', 'beforetoggle'),
+  ('onBeforeUnload', 'beforeunload'),
+  ('onBlur', 'blur'),
+  ('onCancel', 'cancel'),
+  ('onChange', 'change'),
+  ('onClick', 'click'),
+  ('onClose', 'close'),
+  ('onConnect', 'connect'),
+  ('onContextLost', 'contextlost'),
+  ('onContextRestored', 'contextrestored'),
+  ('onCurrentEntryChange', 'currententrychange'),
+  ('onDispose', 'dispose'),
+  ('onDomContentLoaded', 'DOMContentLoaded'),
+  ('onError', 'error'),
+  ('onFocus', 'focus'),
+  ('onFormData', 'formdata'),
+  ('onHashChange', 'hashchange'),
+  ('onInput', 'input'),
+  ('onInvalid', 'invalid'),
+  ('onLanguageChange', 'languagechange'),
+  ('onLoad', 'load'),
+  ('onMessage', 'message'),
+  ('onMessageError', 'messageerror'),
+  ('onNavigate', 'navigate'),
+  ('onNavigateError', 'navigateerror'),
+  ('onNavigateSuccess', 'navigatesuccess'),
+  ('onOffline', 'offline'),
+  ('onOnline', 'online'),
+  ('onOpen', 'open'),
+  ('onPageSwap', 'pageswap'),
+  ('onPageHide', 'pagehide'),
+  ('onPageReveal', 'pagereveal'),
+  ('onPageShow', 'pageshow'),
+  ('onPointerCancel', 'pointercancel'),
+  ('onPopState', 'popstate'),
+  ('onReadyStateChange', 'readystatechange'),
+  ('onRejectionHandled', 'rejectionhandled'),
+  ('onReset', 'reset'),
+  ('onSelect', 'select'),
+  ('onStorage', 'storage'),
+  ('onSubmit', 'submit'),
+  ('onToggle', 'toggle'),
+  ('onUnhandledRejection', 'unhandledrejection'),
+  ('onUnload', 'unload'),
+  ('onVisibilityChange', 'visibilitychange')
+];
+
 Future<void> _fetchElements() async {
   final rs = await http.get(
       Uri.parse('https://developer.mozilla.org/en-US/docs/Web/HTML/Element'));
@@ -121,7 +176,7 @@ String _generateHtmlNodes() {
   }.toList()
     ..sort();
   for (final elem in elems) {
-    final attrs = (_elementAttributes[elem] ?? <String>[])
+    final events2 = (_elementAttributes[elem] ?? <String>[])
       ..remove('class')
       ..remove('style')
       ..sort();
@@ -134,13 +189,17 @@ String _generateHtmlNodes() {
     sb.writeln('  List<String>? classes,');
     sb.writeln('  Map<String, String>? attributes,');
     sb.writeln('  Map<String, String>? styles,');
-    for (final attr in attrs) {
+    for (final attr in events2) {
       final isBool = _boolAttributes.contains(attr);
       final attrDoc = _splitDoc(_attributeDocs[attr] ?? '', 70);
       sb.writeln(attrDoc.map((e) => '/// $e').join('\n'));
       sb.writeln('  ${isBool ? 'bool' : 'String'}? ${_name(attr)},');
     }
     sb.writeln('  Map<String, DomEventFn<L, V>>? events,');
+    for (var event in events) {
+      final (dartName, _) = event;
+      sb.writeln('  DomEventFn<L, V>? $dartName,');
+    }
     sb.writeln('  DomLifecycleEventFn<L>? onCreate,');
     sb.writeln('  DomLifecycleEventFn<L>? onUpdate,');
     sb.writeln('  DomLifecycleEventFn<L>? onRemove,');
@@ -153,7 +212,7 @@ String _generateHtmlNodes() {
     sb.writeln('key: key,');
     sb.writeln('classes: classes,');
     sb.writeln('attributes: <String, String>{');
-    for (final attr in attrs) {
+    for (final attr in events2) {
       final isBool = _boolAttributes.contains(attr);
       final name = _name(attr);
       if (isBool) {
@@ -166,7 +225,20 @@ String _generateHtmlNodes() {
     sb.writeln('},');
 
     sb.writeln('styles: styles,');
-    sb.writeln('events: events,');
+
+    // sb.writeln('events: events,');
+    // for (var event in events) {
+    //   final (dartName, htmlName) = event;
+    //   sb.writeln('  DomEventFn<L, V>? $dartName,');
+    // }
+    sb.writeln('events: <String, dynamic Function(DomEvent<L, V>)>{');
+    for (final event in events) {
+      final (dartName, htmlName) = event;
+      sb.writeln('if ($dartName != null) \'$htmlName\': $dartName,');
+    }
+    sb.writeln('...?events,');
+    sb.writeln('},');
+
     sb.writeln('onCreate: onCreate,');
     sb.writeln('onUpdate: onUpdate,');
     sb.writeln('onRemove: onRemove,');

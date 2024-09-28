@@ -70,7 +70,7 @@ class DomElement<L, V> implements DomNode<L, V> {
   }
 
   @override
-  DomNode build() => throw Exception(
+  DomNode build() => throw StateError(
       'DomElement.build() is never called in DomElement.call().');
 
   @override

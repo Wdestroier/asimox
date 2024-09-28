@@ -1,0 +1,9 @@
+serve:
+  web:
+    - auto: true
+    - hostname: localhost
+    - port: 8080
+    - hostname: localhost
+    - target: web
+    - options:
+        fallback: web/index.html

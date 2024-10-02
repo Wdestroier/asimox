@@ -13,13 +13,7 @@ class AppPage extends DomNode {
       classes: ['counter-app'],
       children: [
         if (name != null) h1(text: '$name counter'),
-        button(
-          id: 'app-button',
-          onClick: (e) {
-            count++;
-          },
-          text: 'Click',
-        ),
+        button(id: 'app-button', text: 'Click', onClick: (e) => count++),
         span(id: 'app-count', text: 'Count: $count'),
       ],
     );

@@ -1,20 +1,7 @@
-# Files and directories created by pub
+# https://dart.dev/guides/libraries/private-files
+# Created by `dart pub`
 .dart_tool/
-.packages
-.pub/
-build/
-# Remove the following pattern if you wish to check in your lock file
+
+# Avoid committing pubspec.lock for library packages; see
+# https://dart.dev/guides/libraries/private-files#pubspeclock.
 pubspec.lock
-
-# Directory created by dartdoc
-doc/api/
-
-# IntelliJ
-*.iml
-.idea
-
-# macOS
-.DS_Store
-
-#
-.local-chromium

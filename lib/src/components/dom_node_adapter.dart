@@ -4,8 +4,9 @@ import 'package:domino/domino.dart' as domino show DomBuilder;
 
 import '../../asimox.dart';
 
-/// This class is a fix to not require domino imports to use RawHtml or text.
-abstract class DomNodeAdapter<Element, Event> extends DomNode<Element, Event> {
+/// This mixin is a fix to not require domino imports and avoid cast errors.
+abstract mixin class DomNodeAdapter<Element, Event>
+    implements DomNode<Element, Event> {
   @override
   void build(domino.DomBuilder<Element, Event> builder);
 

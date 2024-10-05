@@ -4,7 +4,7 @@ import 'package:domino/domino.dart' as domino show DomView, DomEvent;
 final changeDetection = ChangeDetection();
 
 class ChangeDetection {
-  final listeners = <domino.DomView>{};
+  final _listeners = <domino.DomView>{};
 
   // Enabled by default.
   var _enabled = true;
@@ -13,7 +13,7 @@ class ChangeDetection {
   bool get isEnabled => _enabled;
 
   void addListener(domino.DomView listener) {
-    listeners.add(listener);
+    _listeners.add(listener);
   }
 
   /// Re-enable change detection.
@@ -26,7 +26,7 @@ class ChangeDetection {
   /// Request an update to the view.
   void trigger() {
     if (isEnabled) {
-      for (var rootView in listeners) {
+      for (var rootView in _listeners) {
         rootView.invalidate();
       }
     }

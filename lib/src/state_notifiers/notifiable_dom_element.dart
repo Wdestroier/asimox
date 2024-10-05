@@ -1,8 +1,10 @@
 import 'package:domino/domino.dart' as domino show DomElement;
 
 import '../../asimox.dart';
+import '../components/dom_node_adapter.dart';
 
-class DomElement<Element, Event> extends domino.DomElement<Element, Event> {
+class DomElement<Element, Event> extends domino.DomElement<Element, Event>
+    with DomNodeAdapter<Element, Event> {
   DomElement(
     super.tag, {
     super.key,

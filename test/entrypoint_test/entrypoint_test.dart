@@ -1,7 +1,18 @@
+import 'package:test/test.dart';
 
-import '../webdev_proxy.dart';
+import '../web_server.dart';
+import '../web_browser.dart';
 
 main() async {
-  await WebDevProxy.serve(path: r'test\entrypoint\web');
-  await Future.delayed(Duration(minutes: 5));
+  final server = await WebServer.start();
+
+  test('hello world', () async {
+    final browser = WebBrowser.fromBaseUrlProvider(server);
+
+    final page = await browser.open('/');
+    final html = await page.getRootInnerHtml();
+
+    expect(html, equals('<h1>Hello, World!</h1>'));
+    await browser.close();
+  });
 }

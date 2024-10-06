@@ -1,8 +1,9 @@
 import 'dom_node_adapter.dart';
 
-Text text(String text) => Text(text);
+Text<Element, Event> text<Element, Event>(String text) =>
+    Text<Element, Event>(text);
 
-class Text extends DomNodeAdapter {
+class Text<Element, Event> extends DomNodeAdapter<Element, Event> {
   final String text;
 
   Text(this.text);

@@ -8,7 +8,7 @@ class WebBrowser {
 
   WebBrowser.fromBaseUrlProvider(WebServer server) : port = server.port;
 
-  WebBrowser.fromPort({required this.port});
+  WebBrowser.fromLocalhostPort({required this.port});
 
   Future<WebPage> open(String path) async {
     browser ??= await puppeteer.launch(headless: true);

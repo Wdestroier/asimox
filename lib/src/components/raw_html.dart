@@ -1,6 +1,6 @@
 import 'dom_node_adapter.dart';
 
-class RawHtml extends DomNodeAdapter {
+class RawHtml<Element, Event> extends DomNodeAdapter<Element, Event> {
   final String html;
 
   RawHtml(this.html);

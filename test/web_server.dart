@@ -1,4 +1,5 @@
 import 'dart:io' as io;
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:webdev_proxy/src/executable.dart' as webdev_proxy;
@@ -11,7 +12,7 @@ class WebServer {
   WebServer._({required this.path, required this.port});
 
   static Future<WebServer> start({String? path}) async {
-    path ??= p.join('test', _getCallerFileName(), 'web');
+    path ??= p.join(_getCallerRelativeDirectoryPath(), 'web');
 
     // _port = await webdev_proxy.findUnusedPort();
     final server = WebServer._(path: path, port: 8080);
@@ -35,21 +36,36 @@ class WebServer {
     return server;
   }
 
+  Future<void> stop() async {
+    // Finding a way to stop the webdev_proxy would be nice, but the process
+    // will terminate when the test finishes anyway.
+
+    // The stop method is called before all async tests finish. Uncommenting
+    // the line below would make the tests not pass.
+    // await _deleteWebDirectory();
+  }
+
   @pragma("vm:entry-point")
-  static String _getCallerFileName({int skipCount = 2}) {
+  static String _getCallerRelativeDirectoryPath({int skipCount = 2}) {
     final stackTrace = StackTrace.current.toString().split('\n');
     final line = stackTrace.skip(skipCount).first.toString();
-    // For some reason it's '/' on Windows too.
-    return line.substring(
-        line.lastIndexOf('/') + 1, line.lastIndexOf('.dart:'));
+    final workingDirectoryPath =
+        File('').absolute.path.replaceAll(p.separator, '/');
+
+    return line
+        .substring(
+          line.indexOf(workingDirectoryPath) + workingDirectoryPath.length,
+          line.lastIndexOf('/'), // For some reason it's '/' on Windows too.
+        )
+        .replaceAll('/', p.separator);
   }
+
+  Future<void> _deleteWebDirectory() =>
+      io.Process.run('cmd', ['/c', 'rmdir', 'web']);
 
   // TODO(wfontao): Make this work in any OS.
   Future<void> _linkTestFiles() =>
       io.Process.run('cmd', ['/c', 'mklink', '/d', 'web', path]);
-
-  Future<void> _deleteWebDirectory() =>
-      io.Process.run('cmd', ['/c', 'rmdir', 'web']);
 
   Future<void> _checkServerRunning() async {
     const retryLimit = 10;

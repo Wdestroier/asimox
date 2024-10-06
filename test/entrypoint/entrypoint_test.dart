@@ -15,4 +15,6 @@ main() async {
     expect(html, equals('<h1>Hello, World!</h1>'));
     await browser.close();
   });
+
+  server.stop();
 }

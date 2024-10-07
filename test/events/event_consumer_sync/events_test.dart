@@ -1,20 +1,19 @@
 import 'package:test/test.dart';
+
 import '../../web_browser.dart';
 import '../../web_server.dart';
 
 main() async {
   final server = await WebServer.start();
 
-  test('anchor tag renders correctly with href and text', () async {
+  test('click event is not ignored', () async {
     final browser = WebBrowser.fromBaseUrlProvider(server);
 
     final page = await browser.open('/');
-    final html = await page.getRootInnerHtml();
+    await page.click('#button-with-event');
+    final text = await page.getInnerHtml('#state-container');
 
-    expect(
-      html,
-      equals('<a href="/page">Page</a>'),
-    );
+    expect(text, equals('updated'));
     await browser.close();
   });
 

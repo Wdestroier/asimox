@@ -10,7 +10,7 @@ main() async {
     final browser = WebBrowser.fromBaseUrlProvider(server);
 
     final page = await browser.open('/');
-    final html = await page.getInnerHtml('test-extra-tags');
+    final html = await page.getInnerHtml('#test-extra-tags');
 
     expect(
       html,
@@ -23,7 +23,7 @@ main() async {
     final browser = WebBrowser.fromBaseUrlProvider(server);
 
     final page = await browser.open('/');
-    final html = await page.getInnerHtml('test-unescaped-html');
+    final html = await page.getInnerHtml('#test-unescaped-html');
 
     expect(
       html,

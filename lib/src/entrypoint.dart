@@ -4,7 +4,7 @@ import 'package:web/web.dart';
 import '../asimox.dart';
 
 void runApp(
-  DomNode<Element, Event> root, {
+  DomNode root, {
   String rootElementId = 'root',
 }) {
   final rootView = domino.registerView(

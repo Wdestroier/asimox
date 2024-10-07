@@ -14,6 +14,7 @@ class WebServer {
   static Future<WebServer> start({String? path}) async {
     path ??= p.join(_getCallerRelativeDirectoryPath(), 'web');
 
+    // TODO(wfontao): The tests will timeout if the port is already in use.
     // _port = await webdev_proxy.findUnusedPort();
     final server = WebServer._(path: path, port: 8080);
 
@@ -64,13 +65,17 @@ class WebServer {
     final webDevDirectory = Directory('web');
 
     if (await webDevDirectory.exists()) {
+      // TODO(wfontao): Test if invalid symbolic links are successfully deleted.
+      // Try to delete the symbolic link as a File?
       await webDevDirectory.delete(recursive: false);
     }
   }
 
   // TODO(wfontao): Make this work in any OS.
-  Future<void> _linkTestFiles() =>
-      io.Process.run('cmd', ['/c', 'mklink', '/d', 'web', path]);
+  Future<void> _linkTestFiles() async {
+    await io.Process.run('cmd', ['/c', 'mklink', '/d', 'web', path]);
+    // TODO(wfontao): Check if the symbolic link is valid, otherwise throw an error.
+  }
 
   Future<void> _checkServerRunning() async {
     const retryLimit = 10;

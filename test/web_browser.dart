@@ -28,10 +28,16 @@ class WebPage {
 
   WebPage(this._page);
 
-  Future<String> getRootInnerHtml() => getInnerHtml('root');
+  Future<void> click(String selector) async {
+    await _page.waitForSelector(selector);
+    await _page.click(selector);
+  }
 
-  Future<String> getInnerHtml(String elementId) {
+  Future<String> getRootInnerHtml() => getInnerHtml('#root');
+
+  Future<String> getInnerHtml(String selector) async {
+    await _page.waitForSelector(selector);
     return _page.evaluate<String>(
-        '() => document.getElementById("$elementId").innerHTML');
+        '() => document.querySelector("$selector").innerHTML');
   }
 }

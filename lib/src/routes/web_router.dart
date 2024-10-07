@@ -7,6 +7,7 @@ import 'route_middleware.dart';
 class WebRouter extends DomNode {
   final List<Route> routes;
   final RouteHandler defaultRoute;
+  // TODO(wfontao): Global errorRoute with zones or try/catch.
   final List<Middleware> middlewares;
   DomNode? _currentRouteNode;
 

@@ -60,8 +60,13 @@ class WebServer {
         .replaceAll('/', p.separator);
   }
 
-  Future<void> _deleteWebDirectory() =>
-      io.Process.run('cmd', ['/c', 'rmdir', 'web']);
+  Future<void> _deleteWebDirectory() async {
+    final webDevDirectory = Directory('web');
+
+    if (await webDevDirectory.exists()) {
+      await webDevDirectory.delete(recursive: false);
+    }
+  }
 
   // TODO(wfontao): Make this work in any OS.
   Future<void> _linkTestFiles() =>

@@ -6,13 +6,15 @@ import 'package:webdev_proxy/src/executable.dart' as webdev_proxy;
 // import 'package:webdev_proxy/src/port_utils.dart' as webdev_proxy;
 
 class WebServer {
+  static const _webPath = 'web';
+
   String path;
   int port;
 
   WebServer._({required this.path, required this.port});
 
   static Future<WebServer> start({String? path}) async {
-    path ??= p.join(_getCallerRelativeDirectoryPath(), 'web');
+    path ??= p.join(_getCallerRelativeDirectoryPath(), _webPath);
 
     // TODO(wfontao): The tests will timeout if the port is already in use.
     // _port = await webdev_proxy.findUnusedPort();
@@ -29,7 +31,7 @@ class WebServer {
       // '--chrome-debug-port', // Setting the port throws an error.
       // '$port',
       // '--no-build-web-compilers',
-      // 'web',
+      // _webPath,
       // path, // Doesn't work, webdev only works in the web or test directories.
     ]);
     await server._checkServerRunning();
@@ -62,19 +64,21 @@ class WebServer {
   }
 
   Future<void> _deleteWebDirectory() async {
-    final webDevDirectory = Directory('web');
-
-    if (await webDevDirectory.exists()) {
-      // TODO(wfontao): Test if invalid symbolic links are successfully deleted.
-      // Try to delete the symbolic link as a File?
-      await webDevDirectory.delete(recursive: false);
+    if (await Directory(_webPath).exists() &&
+        !await FileSystemEntity.isLink(_webPath)) {
+      throw StateError('The web directory must not be in use.');
     }
+
+    await Link(_webPath).delete();
   }
 
-  // TODO(wfontao): Make this work in any OS.
   Future<void> _linkTestFiles() async {
-    await io.Process.run('cmd', ['/c', 'mklink', '/d', 'web', path]);
-    // TODO(wfontao): Check if the symbolic link is valid, otherwise throw an error.
+    final link = Link(_webPath);
+    await link.create(path);
+
+    if (!await link.exists()) {
+      throw StateError('Created symbolic link must not be broken.');
+    }
   }
 
   Future<void> _checkServerRunning() async {

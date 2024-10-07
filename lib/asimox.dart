@@ -1,4 +1,3 @@
-/// Support for doing something awesome.
 library asimox;
 
 export 'src/entrypoint.dart' show runApp;

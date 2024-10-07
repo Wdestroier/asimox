@@ -36,4 +36,4 @@ import 'package:asimox/asimox.dart';
 ```
 
 ## License
-This project is licensed under the BSD 3-Clause License. See the LICENSE file for more information.
+This project is licensed under the MIT License. See the LICENSE file for more information.

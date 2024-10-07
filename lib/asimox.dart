@@ -20,3 +20,4 @@ export 'src/routes/route_middleware.dart' show Middleware;
 export 'src/components/text.dart' show text, Text;
 export 'src/components/raw_html.dart' show RawHtml;
 export 'src/components/fragment.dart' show Fragment;
+export 'src/components/builder.dart' show Builder, DomNodeBuilder;

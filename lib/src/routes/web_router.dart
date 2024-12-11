@@ -25,15 +25,13 @@ class WebRouter extends DomNode {
   }
 
   void _handleRoute() {
-    final path = window.location.pathname!;
-    final queryString = window.location.search;
-
-    final queryParams = (queryString == null || queryString.isEmpty)
+    final (:pathWithHash, :queryString) = _getPathAndQuery();
+    final queryParams = queryString.isEmpty
         ? <String, String>{}
-        : Uri.splitQueryString(queryString.substring(1));
+        : Uri.splitQueryString(queryString);
 
     for (var route in routes) {
-      final match = route.match(path);
+      final match = route.match(pathWithHash);
       if (match != null) {
         final routeParams = {...match, ...queryParams};
 
@@ -56,6 +54,23 @@ class WebRouter extends DomNode {
     }
 
     _currentRouteNode = defaultRoute(queryParams);
+  }
+
+  ({String pathWithHash, String queryString}) _getPathAndQuery() {
+    final path = window.location.pathname;
+    final search = window.location.search;
+    final hash = window.location.hash;
+
+    if (hash.contains('?')) {
+      final parts = hash.split('?');
+      final fragment = parts.first;
+      final hashQuery = parts.skip(1).join('?');
+      return (pathWithHash: '$path$fragment', queryString: hashQuery);
+    } else {
+      final query =
+          (search == null || search.isEmpty) ? '' : search.substring(1);
+      return (pathWithHash: '$path$hash', queryString: query);
+    }
   }
 
   bool _runMiddleware(

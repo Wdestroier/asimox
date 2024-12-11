@@ -20,6 +20,21 @@ main() {
           },
         ),
         Route(
+          '/url-fragment-test',
+          (parameters) {
+            final value = parameters['keyA'];
+            return ParameterPage(value: value);
+          },
+        ),
+        // A request to this route should not match the route above.
+        Route(
+          '/url-fragment-test#fragment',
+          (parameters) {
+            final value = parameters['keyB'];
+            return ParameterPage(value: value);
+          },
+        ),
+        Route(
           '/unauthorized',
           (_) => UnauthorizedPage(),
           middlewares: [isAuthorized],

@@ -64,12 +64,13 @@ class WebServer {
   }
 
   Future<void> _deleteWebDirectory() async {
-    if (await Directory(_webPath).exists() &&
-        !await FileSystemEntity.isLink(_webPath)) {
-      throw StateError('The web directory must not be in use.');
-    }
+    if (Directory(_webPath).existsSync()) {
+      if (!FileSystemEntity.isLinkSync(_webPath)) {
+        throw StateError('The web directory must not be in use.');
+      }
 
-    await Link(_webPath).delete();
+      await Link(_webPath).delete();
+    }
   }
 
   Future<void> _linkTestFiles() async {

@@ -3419,7 +3419,7 @@ Future<void> _fetchEvents() async {
   if (response.statusCode != 200) {
     throw Exception('Unexpected status code: ${response.statusCode}');
   }
-  await _savePage('data/events.html', response.body);
+  await _savePage('tool/data/events.html', response.body);
   _events = _defaultEvents;
 }
 
@@ -3447,7 +3447,7 @@ Future<void> _fetchElements() async {
         }
       }
     }
-    await _savePage('data/elements.html', rs.body);
+    await _savePage('tool/data/elements.html', rs.body);
     // print('---Default elements---');
     // print(_getMapAsDartCode(_elementDocs));
     // print('---Default elements---');
@@ -3497,7 +3497,7 @@ Future<void> _fetchAttributes() async {
         }
       }
     }
-    await _savePage('data/attributes.html', rs.body);
+    await _savePage('tool/data/attributes.html', rs.body);
 
     // print('---Default attributes---');
     // print(_getMapAsDartCode(_elementAttributes));

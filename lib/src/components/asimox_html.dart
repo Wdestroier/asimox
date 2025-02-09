@@ -1727,7 +1727,7 @@ DomElement<Element, Event> audio<Element, Event>({
 /// you should not use <b> for styling text or granting importance. If you wish
 /// to create boldface text, you should use the CSS font-weight property. If
 /// you wish to indicate an element is of special importance, you should use
-/// the strong element.
+/// the <strong> element.
 DomElement<Element, Event> b<Element, Event>({
   String? key,
   List<String>? classes,
@@ -3695,6 +3695,7 @@ DomElement<Element, Event> canvas<Element, Event>({
   String? translate,
 
   /// For the elements listed here, this establishes the element's width.
+  ///
   ///
   ///
   /// Note: For all other instances, such as
@@ -7793,6 +7794,7 @@ DomElement<Element, Event> embed<Element, Event>({
   /// For the elements listed here, this establishes the element's width.
   ///
   ///
+  ///
   /// Note: For all other instances, such as
   /// <div>, this is a legacy attribute, in
   /// which case the CSS width property should be
@@ -9178,7 +9180,7 @@ DomElement<Element, Event> form<Element, Event>({
   /// List of types the server accepts, typically a file type.
   String? accept,
 
-  /// List of supported charsets.
+  /// The character set, which if provided must be "UTF-8".
   String? acceptCharset,
 
   /// Keyboard shortcut to activate or add focus to the element.
@@ -12328,6 +12330,7 @@ DomElement<Element, Event> iframe<Element, Event>({
   /// For the elements listed here, this establishes the element's width.
   ///
   ///
+  ///
   /// Note: For all other instances, such as
   /// <div>, this is a legacy attribute, in
   /// which case the CSS width property should be
@@ -12796,6 +12799,7 @@ DomElement<Element, Event> img<Element, Event>({
   /// For the elements listed here, this establishes the element's width.
   ///
   ///
+  ///
   /// Note: For all other instances, such as
   /// <div>, this is a legacy attribute, in
   /// which case the CSS width property should be
@@ -13146,6 +13150,7 @@ DomElement<Element, Event> input<Element, Event>({
   String? value,
 
   /// For the elements listed here, this establishes the element's width.
+  ///
   ///
   ///
   /// Note: For all other instances, such as
@@ -17571,6 +17576,7 @@ DomElement<Element, Event> object<Element, Event>({
   /// For the elements listed here, this establishes the element's width.
   ///
   ///
+  ///
   /// Note: For all other instances, such as
   /// <div>, this is a legacy attribute, in
   /// which case the CSS width property should be
@@ -19305,206 +19311,6 @@ DomElement<Element, Event> plaintext<Element, Event>({
 }) {
   return DomElement<Element, Event>(
     'plaintext',
-    key: key,
-    classes: classes,
-    attributes: <String, String>{
-      if (accesskey != null) 'accesskey': accesskey,
-      if (autocapitalize != null) 'autocapitalize': autocapitalize,
-      if (contenteditable != null) 'contenteditable': contenteditable,
-      if (dir != null) 'dir': dir,
-      if (draggable != null) 'draggable': draggable,
-      if (hidden != null) 'hidden': hidden,
-      if (id != null) 'id': id,
-      if (itemprop != null) 'itemprop': itemprop,
-      if (lang != null) 'lang': lang,
-      if (role != null) 'role': role,
-      if (slot != null) 'slot': slot,
-      if (spellcheck != null) 'spellcheck': spellcheck,
-      if (tabindex != null) 'tabindex': tabindex,
-      if (title != null) 'title': title,
-      if (translate != null) 'translate': translate,
-      ...?attributes,
-    },
-    styles: styles,
-    events: <String, dynamic Function(DomEvent<Element, Event>)>{
-      if (onAfterPrint != null) 'afterprint': onAfterPrint,
-      if (onBeforePrint != null) 'beforeprint': onBeforePrint,
-      if (onBeforeMatch != null) 'beforematch': onBeforeMatch,
-      if (onBeforeToggle != null) 'beforetoggle': onBeforeToggle,
-      if (onBeforeUnload != null) 'beforeunload': onBeforeUnload,
-      if (onBlur != null) 'blur': onBlur,
-      if (onCancel != null) 'cancel': onCancel,
-      if (onChange != null) 'change': onChange,
-      if (onClick != null) 'click': onClick,
-      if (onClose != null) 'close': onClose,
-      if (onConnect != null) 'connect': onConnect,
-      if (onContextLost != null) 'contextlost': onContextLost,
-      if (onContextRestored != null) 'contextrestored': onContextRestored,
-      if (onCurrentEntryChange != null)
-        'currententrychange': onCurrentEntryChange,
-      if (onDispose != null) 'dispose': onDispose,
-      if (onDomContentLoaded != null) 'DOMContentLoaded': onDomContentLoaded,
-      if (onError != null) 'error': onError,
-      if (onFocus != null) 'focus': onFocus,
-      if (onFormData != null) 'formdata': onFormData,
-      if (onHashChange != null) 'hashchange': onHashChange,
-      if (onInput != null) 'input': onInput,
-      if (onInvalid != null) 'invalid': onInvalid,
-      if (onLanguageChange != null) 'languagechange': onLanguageChange,
-      if (onLoad != null) 'load': onLoad,
-      if (onMessage != null) 'message': onMessage,
-      if (onMessageError != null) 'messageerror': onMessageError,
-      if (onNavigate != null) 'navigate': onNavigate,
-      if (onNavigateError != null) 'navigateerror': onNavigateError,
-      if (onNavigateSuccess != null) 'navigatesuccess': onNavigateSuccess,
-      if (onOffline != null) 'offline': onOffline,
-      if (onOnline != null) 'online': onOnline,
-      if (onOpen != null) 'open': onOpen,
-      if (onPageSwap != null) 'pageswap': onPageSwap,
-      if (onPageHide != null) 'pagehide': onPageHide,
-      if (onPageReveal != null) 'pagereveal': onPageReveal,
-      if (onPageShow != null) 'pageshow': onPageShow,
-      if (onPointerCancel != null) 'pointercancel': onPointerCancel,
-      if (onPopState != null) 'popstate': onPopState,
-      if (onReadyStateChange != null) 'readystatechange': onReadyStateChange,
-      if (onRejectionHandled != null) 'rejectionhandled': onRejectionHandled,
-      if (onReset != null) 'reset': onReset,
-      if (onSelect != null) 'select': onSelect,
-      if (onStorage != null) 'storage': onStorage,
-      if (onSubmit != null) 'submit': onSubmit,
-      if (onToggle != null) 'toggle': onToggle,
-      if (onUnhandledRejection != null)
-        'unhandledrejection': onUnhandledRejection,
-      if (onUnload != null) 'unload': onUnload,
-      if (onVisibilityChange != null) 'visibilitychange': onVisibilityChange,
-      ...?events,
-    },
-    onCreate: onCreate,
-    onUpdate: onUpdate,
-    onRemove: onRemove,
-    children: children,
-    child: child,
-    text: text,
-  );
-}
-
-/// Enables the embedding of another HTML page into the current one to enable
-/// smoother navigation into new pages.
-DomElement<Element, Event> portal<Element, Event>({
-  String? key,
-  List<String>? classes,
-  Map<String, String>? attributes,
-  Map<String, String>? styles,
-
-  /// Keyboard shortcut to activate or add focus to the element.
-  String? accesskey,
-
-  /// Sets whether input is automatically capitalized when entered by user
-  String? autocapitalize,
-
-  /// Indicates whether the element's content is editable.
-  String? contenteditable,
-
-  /// Defines the text direction. Allowed values are ltr (Left-To-Right) or
-  /// rtl (Right-To-Left)
-  String? dir,
-
-  /// Defines whether the element can be dragged.
-  String? draggable,
-
-  /// Prevents rendering of given element, while keeping child elements, e.g.
-  /// script elements, active.
-  String? hidden,
-
-  /// Often used with CSS to style a specific element. The value of this
-  /// attribute must be unique.
-  String? id,
-
-  ///
-  String? itemprop,
-
-  /// Defines the language used in the element.
-  String? lang,
-
-  /// Defines an explicit role for an element for use by assistive technologies.
-  String? role,
-
-  /// Assigns a slot in a shadow DOM shadow tree to an element.
-  String? slot,
-
-  /// Indicates whether spell checking is allowed for the element.
-  String? spellcheck,
-
-  /// Overrides the browser's default tab order and follows the one specified
-  /// instead.
-  String? tabindex,
-
-  /// Text to be displayed in a tooltip when hovering over the element.
-  String? title,
-
-  /// Specify whether an element's attribute values and the values of its
-  /// Text node
-  /// children are to be translated when the page is localized, or whether to
-  /// leave them unchanged.
-  String? translate,
-  Map<String, DomEventConsumer<Element, Event>>? events,
-  DomEventConsumer<Element, Event>? onAfterPrint,
-  DomEventConsumer<Element, Event>? onBeforePrint,
-  DomEventConsumer<Element, Event>? onBeforeMatch,
-  DomEventConsumer<Element, Event>? onBeforeToggle,
-  DomEventConsumer<Element, Event>? onBeforeUnload,
-  DomEventConsumer<Element, Event>? onBlur,
-  DomEventConsumer<Element, Event>? onCancel,
-  DomEventConsumer<Element, Event>? onChange,
-  DomEventConsumer<Element, Event>? onClick,
-  DomEventConsumer<Element, Event>? onClose,
-  DomEventConsumer<Element, Event>? onConnect,
-  DomEventConsumer<Element, Event>? onContextLost,
-  DomEventConsumer<Element, Event>? onContextRestored,
-  DomEventConsumer<Element, Event>? onCurrentEntryChange,
-  DomEventConsumer<Element, Event>? onDispose,
-  DomEventConsumer<Element, Event>? onDomContentLoaded,
-  DomEventConsumer<Element, Event>? onError,
-  DomEventConsumer<Element, Event>? onFocus,
-  DomEventConsumer<Element, Event>? onFormData,
-  DomEventConsumer<Element, Event>? onHashChange,
-  DomEventConsumer<Element, Event>? onInput,
-  DomEventConsumer<Element, Event>? onInvalid,
-  DomEventConsumer<Element, Event>? onLanguageChange,
-  DomEventConsumer<Element, Event>? onLoad,
-  DomEventConsumer<Element, Event>? onMessage,
-  DomEventConsumer<Element, Event>? onMessageError,
-  DomEventConsumer<Element, Event>? onNavigate,
-  DomEventConsumer<Element, Event>? onNavigateError,
-  DomEventConsumer<Element, Event>? onNavigateSuccess,
-  DomEventConsumer<Element, Event>? onOffline,
-  DomEventConsumer<Element, Event>? onOnline,
-  DomEventConsumer<Element, Event>? onOpen,
-  DomEventConsumer<Element, Event>? onPageSwap,
-  DomEventConsumer<Element, Event>? onPageHide,
-  DomEventConsumer<Element, Event>? onPageReveal,
-  DomEventConsumer<Element, Event>? onPageShow,
-  DomEventConsumer<Element, Event>? onPointerCancel,
-  DomEventConsumer<Element, Event>? onPopState,
-  DomEventConsumer<Element, Event>? onReadyStateChange,
-  DomEventConsumer<Element, Event>? onRejectionHandled,
-  DomEventConsumer<Element, Event>? onReset,
-  DomEventConsumer<Element, Event>? onSelect,
-  DomEventConsumer<Element, Event>? onStorage,
-  DomEventConsumer<Element, Event>? onSubmit,
-  DomEventConsumer<Element, Event>? onToggle,
-  DomEventConsumer<Element, Event>? onUnhandledRejection,
-  DomEventConsumer<Element, Event>? onUnload,
-  DomEventConsumer<Element, Event>? onVisibilityChange,
-  DomLifecycleEventConsumer<Element>? onCreate,
-  DomLifecycleEventConsumer<Element>? onUpdate,
-  DomLifecycleEventConsumer<Element>? onRemove,
-  Iterable<DomNode<Element, Event>>? children,
-  DomNode<Element, Event>? child,
-  String? text,
-}) {
-  return DomElement<Element, Event>(
-    'portal',
     key: key,
     classes: classes,
     attributes: <String, String>{
@@ -26917,7 +26723,8 @@ DomElement<Element, Event> time<Element, Event>({
 }
 
 /// Defines the document's title that is shown in a browser's title bar or a
-/// page's tab. It only contains text; tags within the element are ignored.
+/// page's tab. It only contains text; HTML tags within the element, if any,
+/// are also treated as plain text.
 DomElement<Element, Event> title<Element, Event>({
   String? key,
   List<String>? classes,
@@ -27751,7 +27558,7 @@ DomElement<Element, Event> tt<Element, Event>({
 
 /// Represents a span of inline text which should be rendered in a way that
 /// indicates that it has a non-textual annotation. This is rendered by default
-/// as a simple solid underline but may be altered using CSS.
+/// as a single solid underline but may be altered using CSS.
 DomElement<Element, Event> u<Element, Event>({
   String? key,
   List<String>? classes,
@@ -28455,6 +28262,7 @@ DomElement<Element, Event> video<Element, Event>({
   String? translate,
 
   /// For the elements listed here, this establishes the element's width.
+  ///
   ///
   ///
   /// Note: For all other instances, such as

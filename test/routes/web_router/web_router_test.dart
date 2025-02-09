@@ -58,8 +58,7 @@ main() async {
   test("url fragment isn't ignored", () async {
     final browser = WebBrowser.fromBaseUrlProvider(server);
 
-    final page =
-        await browser.open('/url-fragment-test#fragment?keyB=123');
+    final page = await browser.open('/url-fragment-test#fragment?keyB=123');
     final html = await page.getRootInnerHtml();
 
     expect(html, equals('<p>123</p>'));

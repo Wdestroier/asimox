@@ -1,5 +1,3 @@
-
-
 import 'package:asimox/asimox.dart';
 
 class AppPage extends DomNode {

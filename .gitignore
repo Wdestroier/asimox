@@ -8,3 +8,4 @@ pubspec.lock
 
 /web
 .local-chrome/
+/build

@@ -1,6 +1,7 @@
 import 'package:asimox/asimox.dart';
 
 import '../pages/app_page.dart';
+import '../pages/camera_upload_page.dart';
 import '../pages/home_page.dart';
 import '../pages/not_found_page.dart';
 import '../permissions/authorization_middleware.dart';
@@ -25,6 +26,7 @@ final router = WebRouter(
         );
       },
     ),
+    Route('/camera-upload', (_) => CameraUploadPage()),
   ],
   defaultRoute: (_) => NotFoundPage(),
   middlewares: [isAuthorized],

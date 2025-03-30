@@ -4,6 +4,7 @@ export 'src/entrypoint.dart' show runApp;
 
 export 'src/components/declarative_dom_node.dart' show DomNode;
 export 'src/components/asimox_html.dart';
+export 'src/components/hyperscript.dart' show h;
 
 export 'src/events/event_typedefs.dart' show DomEvent, DomLifecycleEvent;
 export 'src/events/event_consumers.dart'

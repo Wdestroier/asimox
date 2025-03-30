@@ -35,5 +35,17 @@ dependencies:
 import 'package:asimox/asimox.dart';
 ```
 
+## Building for Production
+
+1. Install `webdev`:
+   ```bash
+   $ dart pub global activate webdev
+   ```
+2. Run the build command:
+   ```bash
+   $ webdev build
+   ```
+3. Publish the files in the `your_project/build` directory.
+
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more information.

@@ -8,8 +8,8 @@ import 'text.dart';
 
 DomElement<Element, Event> h<Element, Event>(
   String selector, [
-  var secondArgument,
-  var thirdArgument,
+  secondArgument,
+  thirdArgument,
 ]) {
   var Selector(:tagName, :id, :classes) = Selector.parse(selector);
 
@@ -56,8 +56,8 @@ DomElement<Element, Event> h<Element, Event>(
   var childrenAsNode = (children is DomNode) ? children : null;
   var childrenAsList = (children is List)
       ? children
-          .map((child) => (child is DomNode) ? child : Text(child as String))
-          .toList()
+            .map((child) => (child is DomNode) ? child : Text(child as String))
+            .toList()
       : null;
   var childrenAsString = (children is String) ? children : null;
 

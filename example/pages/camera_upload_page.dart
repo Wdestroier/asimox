@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:web/web.dart';
 import 'package:asimox/asimox.dart';
 
@@ -44,7 +46,7 @@ class CameraUploadPage extends DomNode {
       var file = input.files[0];
       var reader = FileReader();
       reader.onLoadEnd.listen((event) {
-        _imageSrc = reader.result as String;
+        _imageSrc = reader.result.dartify()?.toString();
         changeDetection.trigger();
       });
       reader.readAsDataURL(file);

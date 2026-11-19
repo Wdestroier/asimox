@@ -1,4 +1,5 @@
-import 'dart:html' show window;
+import 'package:web/web.dart'
+    show window, WindowEventGetters, PopStateEvent;
 
 import '../components/declarative_dom_node.dart';
 import 'route.dart';
@@ -20,9 +21,11 @@ class WebRouter extends DomNode {
   }
 
   void _listenNavigationEvents() {
-    window.onPopState.listen((_) => _handleRoute());
+    window.onPopState.listen(_onPopState);
     _handleRoute();
   }
+
+  void _onPopState(PopStateEvent event) => _handleRoute();
 
   void _handleRoute() {
     final (:pathWithHash, :queryString) = _getPathAndQuery();
@@ -67,8 +70,7 @@ class WebRouter extends DomNode {
       final hashQuery = parts.skip(1).join('?');
       return (pathWithHash: '$path$fragment', queryString: hashQuery);
     } else {
-      final query =
-          (search == null || search.isEmpty) ? '' : search.substring(1);
+      final query = search.isEmpty ? '' : search.substring(1);
       return (pathWithHash: '$path$hash', queryString: query);
     }
   }

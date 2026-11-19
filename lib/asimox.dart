@@ -1,4 +1,4 @@
-library asimox;
+library;
 
 export 'src/entrypoint.dart' show runApp;
 

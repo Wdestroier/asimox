@@ -3412,7 +3412,8 @@ final _defaultEvents = [
   ('onVisibilityChange', 'visibilitychange')
 ];
 
-// TODO(wfontao): Add event descriptions as Dart documentation.
+// No need to add event descriptions as Dart documentation, because the
+// recommendation now is to use hyperscript.
 Future<void> _fetchEvents() async {
   final response = await http.get(Uri.parse(
       'https://html.spec.whatwg.org/multipage/indices.html#events-2'));
@@ -3513,6 +3514,7 @@ Future<void> _fetchAttributes() async {
   }
 }
 
+// ignore: unused_element
 String _getMapAsDartCode(Map<String, dynamic> map) {
   final buffer = StringBuffer('{');
 
